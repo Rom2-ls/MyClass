@@ -9,28 +9,28 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Objects
 
-interface Classe {
-    val title: String
-    val number: String
+interface Responsable {
+    val name: String
+    val date: String
 }
 
-internal class ListClassRecycler(private var itemsList: List<Classe>) :
-    RecyclerView.Adapter<ListClassRecycler.MyViewHolder>() {
+internal class ListResponsableRecycler(private var itemsList: List<Responsable>) :
+    RecyclerView.Adapter<ListResponsableRecycler.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var classTitle: TextView = view.findViewById(R.id.classTitle)
-        var classNumber: TextView = view.findViewById(R.id.classNumber)
+        var responsableName: TextView = view.findViewById(R.id.responsableName)
+        var responsableDate: TextView = view.findViewById(R.id.responsableDate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_class, parent, false)
+            .inflate(R.layout.item_responsable, parent, false)
 
         return MyViewHolder(itemView)
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = itemsList[position]
-        holder.classTitle.text = item.title
-        holder.classNumber.text = item.number
+        holder.responsableName.text = item.name
+        holder.responsableDate.text = item.date
     }
     override fun getItemCount(): Int {
         return itemsList.size
