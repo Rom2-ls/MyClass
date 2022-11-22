@@ -1,4 +1,4 @@
 package com.example.myclass;
 
-public class TextMessage {
+public class TextMessage2 {
 }
