@@ -9,28 +9,32 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Objects
 
-interface Classe {
+interface Matiere {
     val title: String
-    val number: String
+    val doc: String
+    val image: String
 }
 
-internal class ListClassRecycler(private var itemsList: List<Classe>) :
-    RecyclerView.Adapter<ListClassRecycler.MyViewHolder>() {
+internal class ListMatiereRecycler(private var itemsList: List<Matiere>) :
+    RecyclerView.Adapter<ListMatiereRecycler.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var classTitle: TextView = view.findViewById(R.id.classTitle)
-        var classNumber: TextView = view.findViewById(R.id.classNumber)
+
+        var matiereTitle: TextView = view.findViewById(R.id.matiereTitle)
+        var matiereDoc: TextView = view.findViewById(R.id.matiereDoc)
+        var matiereImage: TextView = view.findViewById(R.id.matiereImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_class, parent, false)
+            .inflate(R.layout.item_matiere, parent, false)
 
         return MyViewHolder(itemView)
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = itemsList[position]
-        holder.classTitle.text = item.title
-        holder.classNumber.text = item.number
+        holder.matiereTitle.text = item.title
+        holder.matiereDoc.text = item.doc
+        holder.matiereImage.text = item.image
     }
     override fun getItemCount(): Int {
         return itemsList.size
