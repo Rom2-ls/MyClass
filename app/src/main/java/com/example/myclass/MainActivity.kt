@@ -9,15 +9,34 @@ import com.example.myclass.databinding.ActivityMainBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Objects
+import com.google.firebase.auth.FirebaseAuth
+import com.example.myclass.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-
-
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        binding.buttonLogout.setOnClickListener({
+            firebaseAuth.signOut()
+            finish()
+            startActivity(getIntent())
+        });
+
+        if(firebaseAuth.currentUser != null){
+            println(firebaseAuth.currentUser!!.email)
+            setContentView(binding.root)
+        } else {
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }
 
         val button = findViewById<Button>(R.id.button)
         val button2 = findViewById<Button>(R.id.button2)
