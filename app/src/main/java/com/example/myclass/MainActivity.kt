@@ -3,14 +3,9 @@ package com.example.myclass
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.inflate
 import android.widget.Button
 import com.example.myclass.databinding.ActivityMainBinding
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import java.util.Objects
 import com.google.firebase.auth.FirebaseAuth
-import com.example.myclass.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
