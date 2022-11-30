@@ -15,7 +15,6 @@
         android:textSize="40sp"/>
 
     <EditText
-        android:id="@+id/nameField"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         />

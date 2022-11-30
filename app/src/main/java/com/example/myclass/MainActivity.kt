@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.util.Objects
 import com.google.firebase.auth.FirebaseAuth
+import com.example.myclass.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
