@@ -16,12 +16,20 @@ class CreateClassActivity : AppCompatActivity() {
     var user = FirebaseAuth.getInstance().currentUser
 
     data class newStudent(val role: String = "ADMIN")
+    data class newClass(val name: String = "")
 
     fun createClass(name: String) {
-        database = Firebase.database.reference
-        val newStudent = newStudent()
+        if (name.isEmpty()) {
+            Toast.makeText(applicationContext, "Donnez un nom à votre classe", Toast.LENGTH_LONG)
+        } else {
+            database = Firebase.database.reference
+            val newStudent = newStudent()
+            val newClass = newClass(name)
 
-        database.child("Classes").push().child("Students").child(user!!.uid).setValue(newStudent)
+            val classKey = database.push().key!!
+            database.child("Classes").child(classKey).setValue(newClass)
+            database.child("Classes").child(classKey).child("Students").child(user!!.uid).setValue(newStudent)
+        }
     }
 
     @Override
@@ -36,7 +44,7 @@ class CreateClassActivity : AppCompatActivity() {
         binding.btncreateclass.setOnClickListener{
             val name = binding.nameField.text.toString()
 
-            Toast.makeText(applicationContext, name, Toast.LENGTH_LONG).show()
+
             createClass(name)
         }
     }
