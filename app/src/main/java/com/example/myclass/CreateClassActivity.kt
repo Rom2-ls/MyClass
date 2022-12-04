@@ -16,27 +16,10 @@ class CreateClassActivity : AppCompatActivity() {
     var user = FirebaseAuth.getInstance().currentUser
 
     data class newStudent(val role: String = "ADMIN")
-    data class newClass(val name: String = "")
-
-    fun createClass(name: String) {
-        if (name.isEmpty()) {
-            Toast.makeText(applicationContext, "Donnez un nom à votre classe", Toast.LENGTH_LONG)
-        } else {
-            database = Firebase.database.reference
-            val newStudent = newStudent()
-            val newClass = newClass(name)
-
-            val classKey = database.push().key!!
-            database.child("Classes").child(classKey).setValue(newClass)
-            database.child("Classes").child(classKey).child("Students").child(user!!.uid).setValue(newStudent)
-        }
-    }
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        database = Firebase.database.reference
 
         binding = ActivityCreateClassBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,8 +27,38 @@ class CreateClassActivity : AppCompatActivity() {
         binding.btncreateclass.setOnClickListener{
             val name = binding.nameField.text.toString()
 
-
             createClass(name)
+        }
+    }
+
+    fun createClass(name: String) {
+        if (name.isNotEmpty()) {
+            database = Firebase.database.reference
+            //ref Course.kt et ListClassActivity.kt
+
+            //méthode 1 et 2
+            val newStudent = Student(id = user!!.uid, role = "ADMIN")
+
+            //méthode 1
+            val newClass = Course(name)
+
+            //méthode 2
+            //val studentList = ArrayList<Student>()
+            //studentList.add(newStudent)
+            //val newClass = Course(name, students = studentList)
+
+            //méthode 1 et 2
+            val classKey = database.push().key!!
+
+            //méthode 1 et 2
+            database.child("Classes").child(classKey).setValue(newClass)
+
+            //méthode 1
+            database.child("Classes").child(classKey).child("Students").child(user!!.uid).setValue(newStudent)
+
+            Toast.makeText(applicationContext, "Classe créée", Toast.LENGTH_LONG)
+        } else {
+            Toast.makeText(applicationContext, "Donnez un nom à votre classe", Toast.LENGTH_LONG)
         }
     }
 }
