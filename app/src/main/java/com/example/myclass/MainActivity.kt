@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         val button4 = findViewById<Button>(R.id.button4)
         val button5 = findViewById<Button>(R.id.button5)
         val button6 = findViewById<Button>(R.id.button6)
+        val button7 = findViewById<Button>(R.id.button7)
 
         button.setOnClickListener {
             val intent = Intent(this, ListClassActivity::class.java)
@@ -64,6 +65,11 @@ class MainActivity : AppCompatActivity() {
         button6.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
+        }
+
+        button7.setOnClickListener {
+            firebaseAuth.signOut()
+            finish()
         }
 
 //        val intent = Intent(this, ListResponsableActivity::class.java)
