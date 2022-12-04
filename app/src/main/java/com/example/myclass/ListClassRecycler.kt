@@ -1,20 +1,12 @@
 package com.example.myclass
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Objects
 
-interface Classe {
-    val title: String
-    val number: String
-}
-
-internal class ListClassRecycler(private var itemsList: List<Classe>) :
+internal class ListClassRecycler(private var itemsList: List<Course>) :
     RecyclerView.Adapter<ListClassRecycler.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var classTitle: TextView = view.findViewById(R.id.classTitle)
@@ -29,8 +21,8 @@ internal class ListClassRecycler(private var itemsList: List<Classe>) :
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = itemsList[position]
-        holder.classTitle.text = item.title
-        holder.classNumber.text = item.number
+        holder.classTitle.text = item.name
+        holder.classNumber.text = item.nb_students.toString()
     }
     override fun getItemCount(): Int {
         return itemsList.size
