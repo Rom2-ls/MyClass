@@ -1,5 +1,6 @@
 package com.example.myclass
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,12 @@ internal class ListClassRecycler(private var itemsList: List<Course>) :
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var classTitle: TextView = view.findViewById(R.id.classTitle)
         var classNumber: TextView = view.findViewById(R.id.classNumber)
+        init {
+            view.setOnClickListener {
+                val clickedItemId = adapterPosition
+                Log.d("TEST", "item numero : " + itemsList[clickedItemId].name )
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
