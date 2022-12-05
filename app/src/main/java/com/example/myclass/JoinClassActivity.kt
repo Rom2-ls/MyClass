@@ -25,7 +25,7 @@ class JoinClassActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnjoinclass.setOnClickListener{
-            val classLink = binding.classLink.toString()
+            val classLink = binding.classLink.text.toString()
 
             if (classLink.isNotEmpty()) {
                 joinClass(classLink)
@@ -36,15 +36,14 @@ class JoinClassActivity : AppCompatActivity() {
     }
 
     private fun joinClass(classLink: String) {
-        //check if class exists
-        dbRef = FirebaseDatabase.getInstance().getReference("Classes").child(classLink)
+        dbRef = FirebaseDatabase.getInstance().getReference("Classes")
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.w("join class datasnapshot", dataSnapshot.toString())
-                if (dataSnapshot.exists()) {
+                if (dataSnapshot.hasChild(classLink) && checkIfNotInClass(dataSnapshot.child("Students"))) {
                     addStudentToClass(classLink)
                 } else {
-                    Toast.makeText(applicationContext, "Cette classe n'existe pas", Toast.LENGTH_LONG)
+                    Log.w("else apres verif", "classe existe pas ou appartient deja")
+                    Toast.makeText(applicationContext, "Cette classe n'existe pas ou Vous appartenez déjà à cette classe", Toast.LENGTH_LONG)
                 }
             }
 
@@ -59,9 +58,11 @@ class JoinClassActivity : AppCompatActivity() {
 
         val newStudent = Student(user!!.uid, "USER")
 
-        //méthode 1
         database.child("Classes").child(classLink).child("Students").child(user!!.uid).setValue(newStudent)
+    }
 
-        //méthode 2
+    private fun checkIfNotInClass(dataSnapshot: DataSnapshot): Boolean {
+        if (dataSnapshot.hasChild(user!!.uid)) { return false }
+        return true
     }
 }

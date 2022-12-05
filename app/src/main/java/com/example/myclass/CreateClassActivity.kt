@@ -35,26 +35,12 @@ class CreateClassActivity : AppCompatActivity() {
 
     private fun createClass(name: String) {
         database = Firebase.database.reference
-        //ref Course.kt et ListClassActivity.kt
 
-        //méthode 1 et 2
         val newStudent = Student(id = user!!.uid, role = "ADMIN")
-
-        //méthode 1 et 2
         val classKey = database.push().key!!
-
-        //méthode 1
         val newClass = Course(classKey, name)
 
-        //méthode 2
-        //val studentList = ArrayList<Student>()
-        //studentList.add(newStudent)
-        //val newClass = Course(name, students = studentList)
-
-        //méthode 1 et 2
         database.child("Classes").child(classKey).setValue(newClass)
-
-        //méthode 1
         database.child("Classes").child(classKey).child("Students").child(user!!.uid).setValue(newStudent)
     }
 }
