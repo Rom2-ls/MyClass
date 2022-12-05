@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
                     Log.d("TEST", "switch to acticity home")
                     true
                 }
-                R.id.navigation_dashboard -> {
+                R.id.navigation_message -> {
                     Log.d("TEST", "switch to acticity dash")
                     true
                 }

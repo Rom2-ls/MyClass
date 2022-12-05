@@ -1,13 +1,21 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#1C5D99"
+    >
     <item
-        android:id="@+id/navigation_home"
-        android:title="home" />
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/ic_baseline_message_24"
+        android:color="#ffffff"
+        android:title="Message" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:title="dashboard" />
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:color="#ffffff"
+        android:title="Accueil" />
 
     <item
         android:id="@+id/navigation_parametres"
-        android:title="Parametres" />
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:color="#ffffff"
+        android:title="Paramètres" />
 </menu>
