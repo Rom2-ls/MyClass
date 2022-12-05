@@ -66,18 +66,16 @@ class ListClassActivity : AppCompatActivity() {
 
     //méthode 1
     private fun checkIfContainId(dataSnapshot: DataSnapshot): Boolean {
-        for (e in dataSnapshot.children) {
-            if (e.key!! == user!!.uid) { return true }
-        }
+        if (dataSnapshot.hasChild(user!!.uid)) { return true }
         return false
     }
 
     //méthode 2
     private fun checkIfContainId2(dataSnapshot: DataSnapshot): Boolean {
+        //if (dataSnapshot.child("students").hasChild(user!!.uid)) { return true } --> à check
         for (e in dataSnapshot.children) {
             val student = e.getValue(Student::class.java)
-            //ça va pas marcher pck bdd pas générée de la même façon
-            //if (student.id == user!!.uid) { return true }
+            if (student!!.id == user!!.uid) { return true }
         }
         return false
     }

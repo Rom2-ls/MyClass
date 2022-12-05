@@ -17,9 +17,9 @@
             />
 
         <EditText
+            android:id="@+id/classLink"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btnjoinclass"
             android:text="Rejoindre une classe"
