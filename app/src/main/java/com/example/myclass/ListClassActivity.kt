@@ -39,18 +39,10 @@ class ListClassActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     itemsList.clear()
                     for (e in dataSnapshot.children) {
-                        //ref Course.kt et CreateClassActivity.kt
-
-                        //méthode 1
                         if (checkIfContainId(e.child("Students"))) {
                             val jack = e.getValue(Course::class.java)
                             itemsList.add(jack!!)
                         }
-                        //méthode 2 à tester --> flemme, plus propre mais flemme
-                        //if (checkIfContainId(e.child("students"))) {
-                        //    val jack = e.getValue(Course::class.java)
-                        //    itemsList.add(jack!!)
-                        //}
                     }
                 } else {
                     Toast.makeText(applicationContext, "Canceled", Toast.LENGTH_LONG)
@@ -64,21 +56,8 @@ class ListClassActivity : AppCompatActivity() {
         })
     }
 
-    //méthode 1
     private fun checkIfContainId(dataSnapshot: DataSnapshot): Boolean {
-        for (e in dataSnapshot.children) {
-            if (e.key!! == user!!.uid) { return true }
-        }
-        return false
-    }
-
-    //méthode 2
-    private fun checkIfContainId2(dataSnapshot: DataSnapshot): Boolean {
-        for (e in dataSnapshot.children) {
-            val student = e.getValue(Student::class.java)
-            //ça va pas marcher pck bdd pas générée de la même façon
-            //if (student.id == user!!.uid) { return true }
-        }
+        if (dataSnapshot.hasChild(user!!.uid)) { return true }
         return false
     }
 }
