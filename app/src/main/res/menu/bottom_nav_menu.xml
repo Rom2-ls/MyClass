@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/ic_baseline_message_24"
+        android:color="#ffffff"
+        android:title="Message" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:color="#ffffff"
+        android:title="Accueil" />
+
+    <item
+        android:id="@+id/navigation_parametres"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:color="#ffffff"
+        android:title="Paramètres" />
+</menu>

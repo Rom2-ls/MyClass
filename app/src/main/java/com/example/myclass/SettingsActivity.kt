@@ -4,30 +4,31 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.PackageManagerCompat.LOG_TAG
-import com.example.myclass.databinding.ActivityHomeBinding
+import android.view.Menu
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
-class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
+class SettingsActivity : AppCompatActivity() {
+    lateinit var hello_text: TextView
+    lateinit var btnlgt: AppCompatButton
     private lateinit var navView: BottomNavigationView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val user = FirebaseAuth.getInstance().currentUser
+        val email = user?.email
 
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_settings)
         navView = findViewById(R.id.nav_view)
-        navView.selectedItemId = R.id.navigation_home
-        binding.btnJoinClassActivity.setOnClickListener {
-            val intent = Intent(this, JoinClassActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnCreateClassActivity.setOnClickListener {
-            val intent = Intent(this, CreateClassActivity::class.java)
+        hello_text = findViewById(R.id.hellotext)
+        navView.selectedItemId = R.id.navigation_parametres
+        hello_text.setText("Bonjour " + email)
+        btnlgt = findViewById(R.id.button)
+        btnlgt.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
 
@@ -53,6 +54,6 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
             }
-            }
+        }
     }
 }
