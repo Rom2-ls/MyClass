@@ -1,5 +1,6 @@
 package com.example.myclass
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +29,7 @@ class CreateClassActivity : AppCompatActivity() {
             if (name.isNotEmpty()) {
                 createClass(name)
             } else {
-                Toast.makeText(applicationContext, "Donnez un nom à votre classe", Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext, "Donnez un nom à votre classe", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -40,7 +41,12 @@ class CreateClassActivity : AppCompatActivity() {
         val classKey = database.push().key!!
         val newClass = Course(classKey, name)
 
+        database.child("Students").child(user!!.uid).child("Classes").child(newClass!!.id).setValue(newClass)
         database.child("Classes").child(classKey).setValue(newClass)
         database.child("Classes").child(classKey).child("Students").child(user!!.uid).setValue(newStudent)
+        Toast.makeText(this, "La classe a bien été créée !", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, ListClassActivity::class.java)
+        startActivity(intent)
     }
 }

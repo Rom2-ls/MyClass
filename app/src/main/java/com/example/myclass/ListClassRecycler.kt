@@ -1,10 +1,12 @@
 package com.example.myclass
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 internal class ListClassRecycler(private var itemsList: List<Course>) :
@@ -15,6 +17,9 @@ internal class ListClassRecycler(private var itemsList: List<Course>) :
         init {
             view.setOnClickListener {
                 val clickedItemId = adapterPosition
+                val intent = Intent(itemView.context, ListMatiereActivity::class.java)
+                intent.putExtra("class", itemsList[clickedItemId].name)
+                itemView.context.startActivity(intent)
                 Log.d("TEST", "item numero : " + itemsList[clickedItemId].name )
             }
         }
