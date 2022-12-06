@@ -42,13 +42,12 @@ class JoinClassActivity : AppCompatActivity() {
                 if (dataSnapshot.hasChild(classLink) && checkIfNotInClass(dataSnapshot.child("Students"))) {
                     addStudentToClass(classLink)
                 } else {
-                    Log.w("else apres verif", "classe existe pas ou appartient deja")
-                    Toast.makeText(applicationContext, "Cette classe n'existe pas ou Vous appartenez déjà à cette classe", Toast.LENGTH_LONG)
+                    Toast.makeText(applicationContext, "Cette classe n'existe pas ou Vous appartenez déjà à cette classe", Toast.LENGTH_LONG).show()
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(applicationContext, "Canceled", Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext, "Canceled", Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -58,6 +57,7 @@ class JoinClassActivity : AppCompatActivity() {
 
         val newStudent = Student(user!!.uid, "USER")
 
+        database.child("Students").child(user!!.uid).child("Classes").child(classLink).setValue(classLink)
         database.child("Classes").child(classLink).child("Students").child(user!!.uid).setValue(newStudent)
     }
 
