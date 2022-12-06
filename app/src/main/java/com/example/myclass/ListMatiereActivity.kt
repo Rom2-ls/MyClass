@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -16,6 +17,8 @@ class ListMatiereActivity : AppCompatActivity() {
     private val itemsList = ArrayList<Matiere>()
     private lateinit var listMatiereRecycler: ListMatiereRecycler
     private lateinit var navView: BottomNavigationView
+    private lateinit var add_button: TextView
+    private lateinit var add_content: TextInputEditText
     private lateinit var dbRef: DatabaseReference
 
     var user = FirebaseAuth.getInstance().currentUser
@@ -24,6 +27,8 @@ class ListMatiereActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_matiere)
         navView = findViewById(R.id.nav_view)
+        add_button = findViewById(R.id.add_button)
+        add_content = findViewById(R.id.add_content)
 
         val class_id = intent.getStringExtra("class_id")
         val class_title = findViewById<TextView>(R.id.classTitle)
@@ -36,6 +41,16 @@ class ListMatiereActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = listMatiereRecycler
         prepareItems(class_id)
+
+        add_button.setOnClickListener { item ->
+            val newMatiere = add_content.text.toString()
+            //TODO
+            // PUSH en bdd
+
+            add_content.setText("")
+            listMatiereRecycler.notifyDataSetChanged()
+            Toast.makeText(applicationContext, "Matière bien ajoutée", Toast.LENGTH_LONG).show()
+        }
 
         navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
