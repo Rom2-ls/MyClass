@@ -94,8 +94,5 @@ class MainActivity : AppCompatActivity() {
             firebaseAuth.signOut()
             finish()
         }
-
-//        val intent = Intent(this, ListResponsableActivity::class.java)
-//        startActivity(intent)
     }
 }

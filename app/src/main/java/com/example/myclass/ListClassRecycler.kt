@@ -18,7 +18,7 @@ internal class ListClassRecycler(private var itemsList: List<Course>) :
             view.setOnClickListener {
                 val clickedItemId = adapterPosition
                 val intent = Intent(itemView.context, ListMatiereActivity::class.java)
-                intent.putExtra("class", itemsList[clickedItemId].name)
+                intent.putExtra("class_id", itemsList[clickedItemId].id)
                 itemView.context.startActivity(intent)
                 Log.d("TEST", "item numero : " + itemsList[clickedItemId].name )
             }

@@ -36,7 +36,7 @@ class SettingsActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_home -> {
                     Log.d("TEST", "switch to acticity home")
-                    val intent = Intent(this, HomeActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     true
                 }
