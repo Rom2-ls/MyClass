@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class ListMatiereActivity : AppCompatActivity() {
-    lateinit var class_title: TextView
     private val itemsList = ArrayList<Matiere>()
     private lateinit var listMatiereRecycler: ListMatiereRecycler
     private lateinit var navView: BottomNavigationView
+    private lateinit var dbRef: DatabaseReference
+
+    var user = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,29 +61,36 @@ class ListMatiereActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun prepareItems(class_id: String?) {
-        val item = object : Matiere {
-            override val title: String = "Developpement web"
-            override val doc: String = "Doc 1"
-            override val image: String = "Images 7"
-        }
-
-        val item2 = object : Matiere {
-            override val title: String = "Anglais"
-            override val doc: String = "Doc 1"
-            override val image: String = "Images 7"
-        }
-
-        val item3 = object : Matiere {
-            override val title: String = "Mobile"
-            override val doc: String = "Doc 1"
-            override val image: String = "Images 7"
-        }
-
+        val item = Matiere("id1", "Mathématiques")
+        val item2 = Matiere("id2", "Histoire")
+        val item3 = Matiere("id3", "Anglais")
 
         itemsList.add(item)
         itemsList.add(item2)
         itemsList.add(item3)
+
+        dbRef = FirebaseDatabase.getInstance().getReference("Classes").child("Matiere")
+        dbRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    itemsList.clear()
+                    for (e in dataSnapshot.children) {
+                        val matiere = e.getValue(Matiere::class.java)
+                        itemsList.add(matiere!!)
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "Canceled", Toast.LENGTH_LONG)
+                }
+                listMatiereRecycler.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(applicationContext, "Canceled", Toast.LENGTH_LONG)
+            }
+        })
+
         listMatiereRecycler.notifyDataSetChanged()
     }
 }
