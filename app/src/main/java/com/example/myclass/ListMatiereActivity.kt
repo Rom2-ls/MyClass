@@ -40,16 +40,17 @@ class ListMatiereActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = listMatiereRecycler
+
         prepareItems(class_id)
 
-        add_button.setOnClickListener { item ->
-            val newMatiere = add_content.text.toString()
-            //TODO
-            // PUSH en bdd
+        add_button.setOnClickListener {
+            val name = add_content.text.toString()
 
-            add_content.setText("")
-            listMatiereRecycler.notifyDataSetChanged()
-            Toast.makeText(applicationContext, "Matière bien ajoutée", Toast.LENGTH_LONG).show()
+            if (name.isNotEmpty()) {
+                addMatiere(class_id, name)
+            } else {
+                Toast.makeText(applicationContext, "Donnez un nom à votre matiere", Toast.LENGTH_LONG).show()
+            }
         }
 
         navView.setOnItemSelectedListener { item ->
@@ -77,23 +78,26 @@ class ListMatiereActivity : AppCompatActivity() {
         }
     }
 
+    private fun addMatiere(class_id: String?, name: String?) {
+        val matiereKey = dbRef.push().key!!
+        val newMatiere = Matiere(matiereKey, name!!)
+
+        dbRef.child(matiereKey).setValue(newMatiere)
+
+        add_content.setText("")
+        listMatiereRecycler.notifyDataSetChanged()
+        Toast.makeText(applicationContext, "Matière bien ajoutée", Toast.LENGTH_LONG).show()
+    }
+
     private fun prepareItems(class_id: String?) {
-        val item = Matiere("id1", "Mathématiques")
-        val item2 = Matiere("id2", "Histoire")
-        val item3 = Matiere("id3", "Anglais")
-
-        itemsList.add(item)
-        itemsList.add(item2)
-        itemsList.add(item3)
-
-        dbRef = FirebaseDatabase.getInstance().getReference("Classes").child("Matiere")
+        dbRef = FirebaseDatabase.getInstance().getReference("Classes").child(class_id!!).child("Matiere")
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     itemsList.clear()
                     for (e in dataSnapshot.children) {
-                        val matiere = e.getValue(Matiere::class.java)
-                        itemsList.add(matiere!!)
+                        val uzi = e.getValue(Matiere::class.java)
+                        itemsList.add(uzi!!)
                     }
                 } else {
                     Toast.makeText(applicationContext, "Canceled", Toast.LENGTH_LONG)
