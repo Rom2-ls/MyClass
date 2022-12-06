@@ -20,6 +20,7 @@ class ListClassActivity : AppCompatActivity() {
     private lateinit var listClassRecycler: ListClassRecycler
     private lateinit var dbRef: DatabaseReference
     private lateinit var navView: BottomNavigationView
+
     var user = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
