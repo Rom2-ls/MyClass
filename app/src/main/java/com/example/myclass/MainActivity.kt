@@ -33,7 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        if(firebaseAuth.currentUser != null){
+        val intent = Intent(this, TextMessageActivity::class.java)
+        startActivity(intent)
+
+        /*if(firebaseAuth.currentUser != null){
             val collection = FirebaseDatabase.getInstance().getReference("Students")
             val classes = ArrayList<String?>()
             collection.addListenerForSingleValueEvent(object :
@@ -50,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
         val button = findViewById<Button>(R.id.button)
         val button2 = findViewById<Button>(R.id.button2)
