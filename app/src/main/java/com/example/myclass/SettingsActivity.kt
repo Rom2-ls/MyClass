@@ -42,6 +42,8 @@ class SettingsActivity : AppCompatActivity() {
                 }
                 R.id.navigation_message -> {
                     Log.d("TEST", "switch to acticity dash")
+                    val intent = Intent(this, ListMessageActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.navigation_parametres -> {

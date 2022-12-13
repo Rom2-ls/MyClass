@@ -4,45 +4,81 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
+import android.media.Image
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
-import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.database.DatabaseError
+import com.google.firebase.storage.ListResult
+import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.image_show.*
 import java.io.ByteArrayOutputStream
 import java.util.*
+
 
 class DetailMatiereActivity : AppCompatActivity() {
 
     private val storage = FirebaseStorage.getInstance()
-    val photoButton = findViewById<Button>(R.id.button_send)
+    private lateinit var detailMatiereRecycler: DetailMatiereRecycler
+    val storageRef = storage.reference
+
     private val PERMISSION_CODE = 1000
     private val IMAGE_CAPTURE_CODE = 1001
     var vFilename: String = ""
+    var matiere_id: String = ""
+    var class_id: String = ""
+    var pathImage: String? = null
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var dbref: DatabaseReference
+    private var imageList = ArrayList<ImageCours>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_matiere)
 
-        // Récupérez une référence à l'emplacement où vous souhaitez enregistrer la photo :
-        val storageRef = storage.reference.child("Photos")
+        detailMatiereRecycler = DetailMatiereRecycler(imageList, applicationContext)
+        recyclerView = findViewById(R.id.detailMatiereRecycler)
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        recyclerView.adapter = detailMatiereRecycler
 
-        // Définissez un gestionnaire d'événements pour le bouton de prise de photo :
-        /*photoButton.setOnClickListener {
-            new takePictureIntent
-            // Utilisez l'API de l'application intégrée de l'appareil photo pour prendre une photo :
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                takePictureIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        imageList = arrayListOf()
+
+        val photoButton = findViewById<Button>(R.id.button_send)
+        matiere_id = intent.getStringExtra("matiere_id")!!
+        class_id = intent.getStringExtra("class_id")!!
+
+        dbref = FirebaseDatabase.getInstance().getReference("Classes").child(class_id).child("Matiere").child(matiere_id).child("Image")
+        dbref.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(e in snapshot.children){
+                        val image = e.getValue(ImageCours::class.java)
+                        imageList.add(image!!)
+                    }
+                    recyclerView.adapter = DetailMatiereRecycler(imageList, this@DetailMatiereActivity)
                 }
             }
-        }*/
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+        // Récupérez une référence à l'emplacement où vous souhaitez enregistrer la photo :
+
         photoButton.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 openCamera()
@@ -59,7 +95,7 @@ class DetailMatiereActivity : AppCompatActivity() {
 
         // set filename
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        vFilename = "FOTO_" + timeStamp + ".jpg"
+        vFilename = "PIC_" + timeStamp + ".jpg"
 
         //camera intent
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -90,40 +126,22 @@ class DetailMatiereActivity : AppCompatActivity() {
             val imageBitmap = data?.extras?.get("data") as Bitmap
 
             // Enregistrez la photo dans Firebase Storage
-            val photoRef = storage.to(vFilename)
+            val photoRef = storageRef.child("Photos").child(class_id).child(matiere_id).child(vFilename)
             val baos = ByteArrayOutputStream()
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val imageData = baos.toByteArray()
 
-            val uploadTask = photoRef.writeBytes(imageData)
-            /*uploadTask.addOnFailureListener {
+            val uploadTask = photoRef.putBytes(imageData)
+            uploadTask.addOnFailureListener {
                 // En cas d'échec, affichez un message d'erreur à l'utilisateur
                 Toast.makeText(this, "Erreur lors de l'enregistrement de la photo", Toast.LENGTH_SHORT).show()
-            }*/
+            }
+            val pathImage = "https://firebasestorage.googleapis.com/v0/b/myclass-11fa5.appspot.com/o/Photos%2F" + class_id + "%2F" + matiere_id + "%2F" + vFilename + "?alt=media"
+            val newImage = ImageCours(pathImage)
+
+            dbref.push().setValue(newImage)
         }
     }
 
-  /*  companion object {
-        private const val REQUEST_IMAGE = TODO()
-
-        // Récupérez la référence à l'emplacement où vous avez enregistré la photo :
-        val photoRef = storageRef.child("${UUID.randomUUID()}.jpg")
-
-        // Convertissez la photo en un tableau d'octets pour pouvoir l'enregistrer dans Firebase Storage :
-        val baos = ByteArrayOutputStream()
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val imageData = baos.toByteArray()
-
-        // Enregistrez la photo dans Firebase Storage en utilisant la référence à l'emplacement :
-        val uploadTask = photoRef.putBytes(imageData)
-        uploadTask.addOnFailureListener {
-            // En cas d'échec, affichez un message d'erreur à l'utilisateur
-            Toast.makeText(this, "Erreur lors de l'enregistrement de la photo", Toast.LENGTH_SHORT).show()
-        }
-
-    }*/
-}
-
-private fun <A, B> Pair<A, B>.writeBytes(imageData: ByteArray) {
 
 }
