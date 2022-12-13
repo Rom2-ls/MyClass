@@ -24,6 +24,7 @@ class TextMessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_message)
 
+        val class_id = intent.getStringExtra("class_id")
         val layoutManager = LinearLayoutManager(applicationContext)
         val class_id = intent.getStringExtra("class_id")
 
