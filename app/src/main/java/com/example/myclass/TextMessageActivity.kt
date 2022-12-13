@@ -24,10 +24,11 @@ class TextMessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_message)
 
+        val class_id = intent.getStringExtra("class_id")
         val layoutManager = LinearLayoutManager(applicationContext)
 
         textMessageRecycler = TextMessageRecycler(messagelist)
-        dbRef = FirebaseDatabase.getInstance().getReference("Message")
+        dbRef = FirebaseDatabase.getInstance().getReference("Message").child(class_id!!)
 
         recyclerView = findViewById(R.id.recycler_gchat)
         recyclerView.layoutManager = layoutManager
@@ -78,7 +79,7 @@ class TextMessageActivity : AppCompatActivity() {
 
         dbRef.child(messageKey).setValue(newMessage)
 
-        textField.setText("")
+        textField.text = ""
         textMessageRecycler.notifyDataSetChanged()
     }
 }
