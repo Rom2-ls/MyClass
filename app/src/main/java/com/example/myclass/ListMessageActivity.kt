@@ -9,13 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
-class ListClassActivity : AppCompatActivity() {
+class ListMessageActivity : AppCompatActivity() {
     private val itemsList = ArrayList<Course>()
     private lateinit var listClassRecycler: ListClassRecycler
     private lateinit var dbRef: DatabaseReference
@@ -25,7 +21,7 @@ class ListClassActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_class)
+        setContentView(R.layout.activity_list_message)
         navView = findViewById(R.id.nav_view)
         listClassRecycler = ListClassRecycler(itemsList)
         navView.selectedItemId = R.id.navigation_home
@@ -33,6 +29,7 @@ class ListClassActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = listClassRecycler
+
         prepareItems()
 
         navView.setOnItemSelectedListener { item ->
@@ -63,8 +60,10 @@ class ListClassActivity : AppCompatActivity() {
     }
 
     private fun prepareItems() {
+
         dbRef = FirebaseDatabase.getInstance().getReference("Classes")
         dbRef.addValueEventListener(object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     itemsList.clear()

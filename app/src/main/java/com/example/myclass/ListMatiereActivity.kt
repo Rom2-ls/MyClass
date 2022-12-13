@@ -52,30 +52,6 @@ class ListMatiereActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Donnez un nom à votre matiere", Toast.LENGTH_LONG).show()
             }
         }
-
-        navView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    Log.d("TEST", "switch to acticity home")
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_message -> {
-                    Log.d("TEST", "switch to acticity dash")
-                    true
-                }
-                R.id.navigation_parametres -> {
-                    Log.d("TEST", "switch to acticity param")
-                    val intent = Intent(this, SettingsActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> {
-                    true
-                }
-            }
-        }
     }
 
     private fun addMatiere(class_id: String?, name: String?) {

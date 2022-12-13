@@ -44,6 +44,7 @@ class CreateClassActivity : AppCompatActivity() {
         database.child("Students").child(user!!.uid).child("Classes").child(newClass!!.id).setValue(newClass)
         database.child("Classes").child(classKey).setValue(newClass)
         database.child("Classes").child(classKey).child("Students").child(user!!.uid).setValue(newStudent)
+        database.child("Classes").child(classKey).child("Message")
         Toast.makeText(this, "La classe a bien été créée !", Toast.LENGTH_SHORT).show()
 
         val intent = Intent(this, ListClassActivity::class.java)
