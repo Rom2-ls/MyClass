@@ -25,7 +25,7 @@ class ListMessageActivity : AppCompatActivity() {
         navView = findViewById(R.id.nav_view)
         listClassRecycler = ListClassRecycler(itemsList)
         navView.selectedItemId = R.id.navigation_home
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewClass)
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerViewMessage)
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = listClassRecycler
