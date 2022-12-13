@@ -26,7 +26,6 @@ class TextMessageActivity : AppCompatActivity() {
 
         val class_id = intent.getStringExtra("class_id")
         val layoutManager = LinearLayoutManager(applicationContext)
-        val class_id = intent.getStringExtra("class_id")
 
         textMessageRecycler = TextMessageRecycler(messagelist)
         dbRef = FirebaseDatabase.getInstance().getReference("Message").child(class_id!!)
