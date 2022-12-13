@@ -13,7 +13,7 @@ import com.google.firebase.database.*
 
 class ListMessageActivity : AppCompatActivity() {
     private val itemsList = ArrayList<Course>()
-    private lateinit var listClassRecycler: ListClassRecycler
+    private lateinit var listMessageRecycler: ListMessageRecycler
     private lateinit var dbRef: DatabaseReference
     private lateinit var navView: BottomNavigationView
 
@@ -23,12 +23,12 @@ class ListMessageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_message)
         navView = findViewById(R.id.nav_view)
-        listClassRecycler = ListClassRecycler(itemsList)
+        listMessageRecycler = ListMessageRecycler(itemsList)
         navView.selectedItemId = R.id.navigation_home
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewMessage)
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = listClassRecycler
+        recyclerView.adapter = listMessageRecycler
 
         prepareItems()
 
@@ -76,7 +76,7 @@ class ListMessageActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(applicationContext, "Canceled", Toast.LENGTH_LONG)
                 }
-                listClassRecycler.notifyDataSetChanged()
+                listMessageRecycler.notifyDataSetChanged()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
