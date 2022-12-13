@@ -25,9 +25,10 @@ class TextMessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_text_message)
 
         val layoutManager = LinearLayoutManager(applicationContext)
+        val class_id = intent.getStringExtra("class_id")
 
         textMessageRecycler = TextMessageRecycler(messagelist)
-        dbRef = FirebaseDatabase.getInstance().getReference("Message")
+        dbRef = FirebaseDatabase.getInstance().getReference("Message").child(class_id!!)
 
         recyclerView = findViewById(R.id.recycler_gchat)
         recyclerView.layoutManager = layoutManager
@@ -42,7 +43,7 @@ class TextMessageActivity : AppCompatActivity() {
             if (messageText.isNotEmpty()) {
                 addMessage(messageText)
             } else {
-                Toast.makeText(applicationContext, "Nous n'envoyons pas de message vide. Enculé", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Nous n'envoyons pas de message vide.", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -78,7 +79,7 @@ class TextMessageActivity : AppCompatActivity() {
 
         dbRef.child(messageKey).setValue(newMessage)
 
-        textField.setText("")
+        textField.text = ""
         textMessageRecycler.notifyDataSetChanged()
     }
 }
