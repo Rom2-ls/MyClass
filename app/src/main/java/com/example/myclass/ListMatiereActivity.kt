@@ -36,7 +36,7 @@ class ListMatiereActivity : AppCompatActivity() {
         navView.selectedItemId = R.id.navigation_home
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewMatiere)
-        listMatiereRecycler = ListMatiereRecycler(itemsList)
+        listMatiereRecycler = ListMatiereRecycler(itemsList, class_id!!)
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = listMatiereRecycler
