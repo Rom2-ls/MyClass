@@ -33,7 +33,6 @@ class ListMatiereActivity : AppCompatActivity() {
     private lateinit var dbRef: DatabaseReference
 
     private val REQUEST_READ_EXTERNAL_STORAGE = 333
-    private lateinit var binding: ActivityListMatiereBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
