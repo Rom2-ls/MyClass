@@ -11,16 +11,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var navView: BottomNavigationView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        navView = findViewById(R.id.nav_view)
-        navView.selectedItemId = R.id.navigation_home
         binding.btnJoinClassActivity.setOnClickListener {
             val intent = Intent(this, JoinClassActivity::class.java)
             startActivity(intent)
@@ -30,29 +26,5 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, CreateClassActivity::class.java)
             startActivity(intent)
         }
-
-        navView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    Log.d("TEST", "switch to acticity home")
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.navigation_message -> {
-                    Log.d("TEST", "switch to acticity dash")
-                    true
-                }
-                R.id.navigation_parametres -> {
-                    Log.d("TEST", "switch to acticity param")
-                    val intent = Intent(this, SettingsActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> {
-                    true
-                }
-            }
-            }
     }
 }

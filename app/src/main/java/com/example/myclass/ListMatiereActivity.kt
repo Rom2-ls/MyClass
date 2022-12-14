@@ -16,24 +16,19 @@ import com.google.firebase.database.*
 class ListMatiereActivity : AppCompatActivity() {
     private val itemsList = ArrayList<Matiere>()
     private lateinit var listMatiereRecycler: ListMatiereRecycler
-    private lateinit var navView: BottomNavigationView
     private lateinit var add_button: TextView
     private lateinit var add_content: TextInputEditText
     private lateinit var dbRef: DatabaseReference
 
-    var user = FirebaseAuth.getInstance().currentUser
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_matiere)
-        navView = findViewById(R.id.nav_view)
         add_button = findViewById(R.id.add_button)
         add_content = findViewById(R.id.add_content)
 
         val class_id = intent.getStringExtra("class_id")
         val class_title = findViewById<TextView>(R.id.classTitle)
-        class_title.setText(class_id)
-        navView.selectedItemId = R.id.navigation_home
+        class_title.text = class_id
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewMatiere)
         listMatiereRecycler = ListMatiereRecycler(itemsList, class_id!!)
