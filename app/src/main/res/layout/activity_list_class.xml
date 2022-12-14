@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Mes classes"
+        android:text="Mes Classes"
         android:gravity="left|top"
         android:layout_margin="15dp"
         android:textColor="@color/black"

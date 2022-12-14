@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_detail_matiere.*
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -53,6 +54,7 @@ class DetailMatiereActivity : AppCompatActivity() {
 
         matiere_id = intent.getStringExtra("matiere_id")!!
         class_id = intent.getStringExtra("class_id")!!
+        matiereTitle.text = matiere_id
 
         dbref = FirebaseDatabase.getInstance().getReference("Classes").child(class_id).child("Matiere").child(matiere_id).child("Image")
         dbref.addValueEventListener(object: ValueEventListener{

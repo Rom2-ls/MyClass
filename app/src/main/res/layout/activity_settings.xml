@@ -12,10 +12,12 @@
 
     <TextView
         android:id="@+id/textView"
-        android:text="Paramètres"
-        android:layout_width="wrap_content"
+        android:text="Mes Paramètres"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:gravity="left|top"
+        android:textSize="28dp"
         android:layout_margin="20dp"
         />
 
@@ -30,16 +32,39 @@
         android:textSize="22dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/button_settings"
+        android:text="Créer une classe"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hellotext" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/button_settings"
+        android:text="Rejoindre une classe"
+        android:textColor="@color/white"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button1" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:background="@color/primary"
+        android:background="@drawable/button_settings"
         android:text="Déconnexion"
         android:textColor="@color/white"
-        android:textStyle="bold"
+        android:layout_marginTop="7dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hellotext" />
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
