@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,25 +8,43 @@
     android:paddingRight="16dp"
     android:gravity="center"
     android:orientation="vertical">
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/LoginTextInputOuterFieldStyle"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="168dp"
+        app:boxStrokeColor="@color/primary"
+        app:hintTextColor="@color/primary"
+        app:layout_constraintBottom_toTopOf="@+id/btnjoinclass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.06">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity=""
-            android:text="Rejoindre une classe"
-            android:textSize="40sp"
-            />
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/classLink"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btnjoinclass"
-            android:text="Rejoindre une classe"
-            android:layout_width="match_parent"
+            android:layout_width="359dp"
             android:layout_height="wrap_content"
+            android:hint="Entrez un ID de classe :"
+            app:layout_constraintBottom_toTopOf="@+id/btnjoinclass"
+            app:boxStrokeColor="@color/primary"
+            app:hintTextColor="@color/primary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnjoinclass"
+            android:layout_width="359dp"
+            android:layout_height="55dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:background="@drawable/buttons_style"/>
-</LinearLayout>
+            android:background="@drawable/button_sign"
+            android:text="Rejoindre une classe"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.499" />
+</androidx.constraintlayout.widget.ConstraintLayout>

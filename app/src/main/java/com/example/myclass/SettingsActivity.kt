@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 class SettingsActivity : AppCompatActivity() {
     lateinit var hello_text: TextView
     lateinit var btnlgt: AppCompatButton
+    lateinit var btnadd: AppCompatButton
+    lateinit var btnjoin: AppCompatButton
     private lateinit var navView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,11 +26,21 @@ class SettingsActivity : AppCompatActivity() {
         navView = findViewById(R.id.nav_view)
         hello_text = findViewById(R.id.hellotext)
         navView.selectedItemId = R.id.navigation_parametres
-        hello_text.setText("Bonjour " + email)
+        hello_text.setText("Compte : " + email)
         btnlgt = findViewById(R.id.button)
+        btnadd = findViewById(R.id.button1)
+        btnjoin = findViewById(R.id.button2)
         btnlgt.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+        }
+        btnadd.setOnClickListener {
+            val intent = Intent(this, CreateClassActivity::class.java)
+            startActivity(intent)
+        }
+        btnjoin.setOnClickListener {
+            val intent = Intent(this, JoinClassActivity::class.java)
             startActivity(intent)
         }
 
