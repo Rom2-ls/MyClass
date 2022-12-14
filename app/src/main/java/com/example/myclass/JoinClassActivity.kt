@@ -1,7 +1,7 @@
 package com.example.myclass
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myclass.databinding.ActivityJoinClassBinding
@@ -59,6 +59,9 @@ class JoinClassActivity : AppCompatActivity() {
 
         database.child("Students").child(user!!.uid).child("Classes").child(classLink).setValue(classLink)
         database.child("Classes").child(classLink).child("Students").child(user!!.uid).setValue(newStudent)
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun checkIfNotInClass(dataSnapshot: DataSnapshot): Boolean {

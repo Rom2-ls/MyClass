@@ -17,14 +17,14 @@ class ListMessageActivity : AppCompatActivity() {
     private lateinit var dbRef: DatabaseReference
     private lateinit var navView: BottomNavigationView
 
-    var user = FirebaseAuth.getInstance().currentUser
+    private var user = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_message)
         navView = findViewById(R.id.nav_view)
         listMessageRecycler = ListMessageRecycler(itemsList)
-        navView.selectedItemId = R.id.navigation_home
+        navView.selectedItemId = R.id.navigation_message
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewMessage)
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
@@ -35,19 +35,16 @@ class ListMessageActivity : AppCompatActivity() {
         navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
-                    Log.d("TEST", "switch to acticity home")
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.navigation_message -> {
-                    Log.d("TEST", "switch to acticity dash")
                     val intent = Intent(this, ListMessageActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.navigation_parametres -> {
-                    Log.d("TEST", "switch to acticity param")
                     val intent = Intent(this, SettingsActivity::class.java)
                     startActivity(intent)
                     true
